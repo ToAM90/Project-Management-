@@ -6,7 +6,7 @@ import java.time.LocalDate;
 public class Employee {
     @Override
     public String toString() {
-        return getFullName() + " (" + currency.format(this.salary) + ") " + department;
+        return getFullName() + " (" + currency.format(salary) + ") " + department;
     }
 
     private long employeeId;
@@ -40,7 +40,7 @@ public class Employee {
     }
 
     public double raiseSalary(double percent){
-        this.salary = salary + (salary * percent);
+        salary = salary + (salary * percent);
         return this.salary;
     }
 

@@ -1,6 +1,5 @@
 package com.techelevator;
 
-import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,6 +44,32 @@ public class Application {
 
         // create some departments
         createDepartments();
+
+        // print each department by name
+        printDepartments();
+
+        // create employees
+        createEmployees();
+
+        // print all employees
+        printEmployees();
+
+        // create the TEams project
+        createTeamsProject();
+
+
+        // create the Marketing Landing Page Project
+        createLandingPageProject();
+        
+        // print each project name and the total number of employees on the project
+        printProjectsReport();
+
+    }
+
+    /**
+     * Create departments and add them to the collection of departments
+     */
+    private void createDepartments() {
         Department marketing = new Department(1, "Marketing");
         Department sales = new Department(2, "Sales");
         Department engineering = new Department(3, "Engineering");
@@ -52,27 +77,32 @@ public class Application {
         departments.add(marketing);
         departments.add(sales);
         departments.add(engineering);
+    }
 
-        // print each department by name
-        printDepartments();
+    /**
+     * Print out each department in the collection.
+     */
+    private void printDepartments() {
+        System.out.println("------------- DEPARTMENTS ------------------------------");
         for (Department name : departments){
             System.out.println(name);
         }
+    }
 
-
-
-        // create employees
-        createEmployees();
+    /**
+     * Create employees and add them to the collection of employees
+     */
+    private void createEmployees() {
         Employee employee1 = new Employee();
-            employee1.setEmployeeId(1);
-            employee1.setFirstName("Dean");
-            employee1.setLastName("Johnson");
-            employee1.setEmail("djohnson@teams.com");
-            employee1.setDepartment(engineering);
-            employee1.setHireDate("2020-08-21");
-            employee1.setSalary(60000.00);
+        employee1.setEmployeeId(1);
+        employee1.setFirstName("Dean");
+        employee1.setLastName("Johnson");
+        employee1.setEmail("djohnson@teams.com");
+        employee1.setDepartment(departments.get(2));
+        employee1.setHireDate("2020-08-21");
+        employee1.setSalary(60000.00);
         Employee employee2 = new Employee(2, "Angie", "Smith", "asmith@teams.com", getDepartmentByName("Engineering"), "8/21/2020");
-        Employee employee3 = new Employee(3, "Margaret", "Thompson", "mthompson@teams.com", marketing, "8/21/2020");
+        Employee employee3 = new Employee(3, "Margaret", "Thompson", "mthompson@teams.com", departments.get(0), "8/21/2020");
 
         employees.add(employee1);
         employees.add(employee2);
@@ -82,61 +112,6 @@ public class Application {
 
         employee2.raiseSalary(0.10);
 
-        // print all employees
-        printEmployees();
-        for (Employee name : employees){
-            System.out.println(name);
-        }
-
-        // create the TEams project
-        createTeamsProject();
-        Project one = new Project("TEams", "Project Management Software");
-        one.setStartDate(today, 0);
-        one.setDueDate(today, 30);
-        for (Employee employee : employees){
-            if(employee.getDepartment().getName().equals("Engineering")){;
-            deptEngineering.add(employee); }
-        }
-
-        one.setTeamMembers(deptEngineering);
-        projects.put(one.getName(), one);
-
-
-
-        // create the Marketing Landing Page Project
-        createLandingPageProject();
-        Project two = new Project("Marketing Landing Page","Lead Capture Landing Page for Marketing", today.plusDays(31) , today.plusDays(38));
-        for (Employee employee : employees){
-            if(employee.getDepartment().getName().equals("Marketing")){;
-                deptMarketing.add(employee); }}
-        two.setTeamMembers(deptMarketing);
-        projects.put(two.getName(), two);
-
-        // print each project name and the total number of employees on the project
-        printProjectsReport();
-        System.out.println("TEams: " + deptEngineering.size());
-        System.out.println("Marketing Landing Page: " + deptMarketing.size());
-    }
-
-    /**
-     * Create departments and add them to the collection of departments
-     */
-    private void createDepartments() {
-    }
-
-    /**
-     * Print out each department in the collection.
-     */
-    private void printDepartments() {
-        System.out.println("------------- DEPARTMENTS ------------------------------");
-
-    }
-
-    /**
-     * Create employees and add them to the collection of employees
-     */
-    private void createEmployees() {
-
     }
 
     /**
@@ -144,13 +119,25 @@ public class Application {
      */
     private void printEmployees() {
         System.out.println("\n------------- EMPLOYEES ------------------------------");
-
+        for (Employee name : employees){
+            System.out.println(name);
+        }
     }
 
     /**
      * Create the 'TEams' project.
      */
     private void createTeamsProject() {
+        Project one = new Project("TEams", "Project Management Software");
+        one.setStartDate(today, 0);
+        one.setDueDate(today, 30);
+        for (Employee employee : employees){
+            if(employee.getDepartment().getName().equals("Engineering")){;
+                deptEngineering.add(employee); }
+        }
+
+        one.setTeamMembers(deptEngineering);
+        projects.put(one.getName(), one);
 
     }
 
@@ -158,6 +145,12 @@ public class Application {
      * Create the 'Marketing Landing Page' project.
      */
     private void createLandingPageProject() {
+        Project two = new Project("Marketing Landing Page","Lead Capture Landing Page for Marketing", today.plusDays(31) , today.plusDays(38));
+        for (Employee employee : employees){
+            if(employee.getDepartment().getName().equals("Marketing")){;
+                deptMarketing.add(employee); }}
+        two.setTeamMembers(deptMarketing);
+        projects.put(two.getName(), two);
 
     }
 
@@ -166,7 +159,8 @@ public class Application {
      */
     private void printProjectsReport() {
         System.out.println("\n------------- PROJECTS ------------------------------");
-
+        System.out.println("TEams: " + deptEngineering.size());
+        System.out.println("Marketing Landing Page: " + deptMarketing.size());
     }
 
 }
